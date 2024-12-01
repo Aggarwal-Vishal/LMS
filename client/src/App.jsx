@@ -1,8 +1,9 @@
 import "./App.css";
 import { Button } from "./components/ui/button";
+import Login from "./pages/login";
 
 function App() {
-  return <Button>Let&apos;s Build LMS</Button>;
+  return <Login />;
 }
 
 export default App;
