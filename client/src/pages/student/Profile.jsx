@@ -51,6 +51,10 @@ const Profile = () => {
   };
 
   useEffect(() => {
+    refetch();
+  });
+
+  useEffect(() => {
     if (isSuccess) {
       refetch();
       toast.success(updateUserData?.message || "Profile Update");

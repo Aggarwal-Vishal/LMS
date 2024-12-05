@@ -65,18 +65,20 @@ export default function Login() {
 
   useEffect(() => {
     if (registerSuccess && registerData) {
-      toast.success(registerData.message || "Signup Successfull");
+      toast.success(registerData?.message || "Signup Successfull");
     }
     if (registerError) {
-      toast.error(registerData.message || "Signup Failed");
+      const errorMessage = registerError?.data?.message || "Signup Failed";
+      toast.error(errorMessage);
     }
     if (loginSuccess && loginData) {
-      toast.success(loginData.message || "Login Successfull");
+      toast.success(loginData?.message || "Login Successfull");
       navigate("/");
     }
     if (loginError) {
-      toast.error(loginData.message || "Login Failed");
+      toast.error(loginError?.data?.message || "Login Failed");
     }
+    console.log(registerError, loginError);
   }, [
     loginIsLoading,
     registerIsLoading,
