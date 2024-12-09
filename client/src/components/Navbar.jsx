@@ -91,7 +91,9 @@ const Navbar = () => {
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>
                       <Settings />
-                      <span>Dashboard</span>
+                      <span onClick={() => navigate("/admin/dashboard")}>
+                        Dashboard
+                      </span>
                     </DropdownMenuItem>
                   </>
                 )}
