@@ -120,6 +120,7 @@ const CourseTab = () => {
 
   useEffect(() => {
     if (isSuccess) {
+      refetch();
       toast.success(data.message || "Course update");
     }
     if (error) {

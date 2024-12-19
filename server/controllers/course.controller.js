@@ -32,6 +32,45 @@ export const createCourse = async (req, res) => {
   }
 };
 
+export const searchCourse = async (req, res) => {
+  try {
+    const { query = "", categories = [], sortByPrice = "" } = req.query;
+    //create search query
+    const searchCriteria = {
+      isPublished: true,
+      $or: [
+        { courseTitle: { $regex: query, $options: "i" } },
+        { subTitle: { $regex: query, $options: "i" } },
+        { category: { $regex: query, $options: "i" } },
+      ],
+    };
+
+    // if category selected
+    if (categories.length > 0) {
+      searchCriteria.category = { $in: categories };
+    }
+
+    //sorting order
+    const sortOptions = {};
+    if (sortByPrice === "low") {
+      sortOptions.coursePrice = 1; //sort by price
+    } else if (sortByPrice === "high") {
+      sortOptions.coursePrice = -1; //descending order sort
+    }
+
+    let courses = await Course.find(searchCriteria)
+      .populate({ path: "creator", select: "name photoUrl" })
+      .sort(sortOptions);
+
+    return res.status(200).json({
+      success: true,
+      courses: courses || [],
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getPublishedCourse = async (_, res) => {
   try {
     const courses = await Course.find({ isPublished: true }).populate({
@@ -165,8 +204,17 @@ export const createLecture = async (req, res) => {
         message: "Lecture title is required",
       });
     }
+    const video = req.file;
+    let videoUrl = "";
+    let publicId = "";
+    if (video) {
+      // Upload video to Cloudinary
+      const videoUploadResponse = await uploadMedia(video.path); // Modify this according to your upload logic
+      videoUrl = videoUploadResponse.secure_url;
+      publicId = videoUploadResponse.public_id;
+    }
 
-    const lecture = await Lecture.create({ lectureTitle });
+    const lecture = await Lecture.create({ lectureTitle, videoUrl, publicId });
 
     const course = await Course.findById(courseId);
     if (course) {
@@ -180,8 +228,6 @@ export const createLecture = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    console.log("Request Params:", req.params);
-    console.log("Request Body:", req.body);
     return res.status(500).json({
       message: "Failed to create lecture",
     });

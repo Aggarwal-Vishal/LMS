@@ -16,6 +16,7 @@ export const authApi = createApi({
         method: "POST",
         body: inputData,
       }),
+      invalidatesTags: ["Refetch_Lecture"],
     }),
     loginUser: builder.mutation({
       query: (inputData) => ({
@@ -23,6 +24,7 @@ export const authApi = createApi({
         method: "POST",
         body: inputData,
       }),
+      invalidatesTags: ["Refetch_Lecture"],
     }),
     async onQueryStarted(_, { queryFulfilled, dispatch }) {
       try {

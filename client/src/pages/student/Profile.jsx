@@ -65,7 +65,7 @@ const Profile = () => {
   }, [error, isError, updateUserData, isSuccess]);
 
   return (
-    <div className="max-w-4xl mx-auto px-4 my-24 ">
+    <div className="max-w-4xl mx-auto px-4 my-10">
       <h1 className="font-bold text-2xl text-center md:text-left">Profile</h1>
       {isLoading ? (
         <h1>Profile Loading...</h1>

@@ -41,8 +41,6 @@ const CreateLecture = () => {
     }
   }, [isSuccess, error]);
 
-  console.log(lectureData);
-
   return (
     <div>
       <div className="flex-1 mx-10">

@@ -5,11 +5,10 @@ import { useGetPublishedCourseQuery } from "@/features/api/courseApi";
 
 const Courses = ({ course }) => {
   const { data, isLoading, isError } = useGetPublishedCourseQuery();
-  console.log(data);
   if (isError) return <h1>Some error happened while fetching courses</h1>;
 
   return (
-    <div className="bg-gray-50 ">
+    <div className="bg-gray-50 dark:bg-[#353535] ">
       <div className="max-w-7xl mx-auto p-6">
         <h1 className="font-bold text-center text-3xl mb-4">Our Courses</h1>
         <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

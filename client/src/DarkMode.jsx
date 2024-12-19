@@ -7,8 +7,10 @@ import {
 } from "./components/ui/dropdown-menu";
 import { Moon, Sun } from "lucide-react";
 import { Button } from "./components/ui/button";
+import { useTheme } from "./components/ThemeProvider";
 
 const DarkMode = () => {
+  const { setTheme } = useTheme();
   return (
     <div>
       <DropdownMenu>
@@ -25,9 +27,6 @@ const DarkMode = () => {
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setTheme("dark")}>
             Dark
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setTheme("system")}>
-            System
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

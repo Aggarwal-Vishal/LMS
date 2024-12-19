@@ -1,6 +1,7 @@
 import {
   useLoginUserMutation,
   useRegisterUserMutation,
+  useLoadUserQuery,
 } from "@/features/api/authApi";
 import { Button } from "@/components/ui/button";
 import {
@@ -26,6 +27,8 @@ export default function Login() {
     password: "",
   });
   const [loginInput, setLoginInput] = useState({ email: "", password: "" });
+
+  const { refetch } = useLoadUserQuery();
 
   const [
     registerUser,
@@ -65,6 +68,7 @@ export default function Login() {
 
   useEffect(() => {
     if (registerSuccess && registerData) {
+      refetch();
       toast.success(registerData?.message || "Signup Successfull");
     }
     if (registerError) {
@@ -72,13 +76,13 @@ export default function Login() {
       toast.error(errorMessage);
     }
     if (loginSuccess && loginData) {
+      refetch();
       toast.success(loginData?.message || "Login Successfull");
       navigate("/");
     }
     if (loginError) {
       toast.error(loginError?.data?.message || "Login Failed");
     }
-    console.log(registerError, loginError);
   }, [
     loginIsLoading,
     registerIsLoading,
